@@ -18,7 +18,17 @@ final class WordPressCrawler
 
     $this->visited[$url] = true;
 
-    $html = file_get_contents($url);
+    $html = file_get_contents($url, false,  stream_context_create([
+      'http' => [
+          'method'  => 'GET',
+          'header'  => implode("\r\n", [
+              'User-Agent: websyspro-wp-engine/1.0',
+              'Accept: text/html'
+          ]),
+          'timeout' => 30,
+      ]
+    ]));
+    
     if( $html === false ){
       throw new RuntimeException("Falha ao acessar {$url}");
     }
