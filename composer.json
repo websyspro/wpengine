@@ -1,25 +1,20 @@
 {
-  "name": "websyspro/wpengine",
-  "description": "Core library for WordPress implementation with common utilities and components",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "license": "MIT",
+  "name": "websyspro/wp-engine",
+  "description": "WordPress runtime installer for Composer-based projects",
   "type": "library",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Websyspro\\WpEngine\\": "src/"
-    }   
-  },
-  "scripts": {
-    "git:push": "git add . && git commit -m \"Update components\" && git push origin HEAD",
-    "git:pull": "git pull origin main"
-  },
-  "authors": [
-    {
-      "name": "websyspro",
-      "email": "websyspro.services@gmail.com"
     }
+  },
+  "bin": [
+    "bin/install.php"
   ],
-  "require-dev": {},
-  "require": {}
+  "extra": {
+    "wp-engine": {
+      "wordpress": "6.9",
+      "locale": "pt_BR"
+    }
+  }
 }
