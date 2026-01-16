@@ -1,0 +1,25 @@
+{
+  "name": "websyspro/wpengine",
+  "description": "Core library for WordPress implementation with common utilities and components",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "MIT",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Websyspro\\WpEngine\\": "src/"
+    }   
+  },
+  "scripts": {
+    "git:push": "git add . && git commit -m \"Update components\" && git push origin HEAD",
+    "git:pull": "git pull origin main"
+  },
+  "authors": [
+    {
+      "name": "websyspro",
+      "email": "websyspro.services@gmail.com"
+    }
+  ],
+  "require-dev": {},
+  "require": {}
+}
