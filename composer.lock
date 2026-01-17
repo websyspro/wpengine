@@ -4,12 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43606725593744ac5417c29308718069",
+    "content-hash": "e7fe0585ef93919fdeadf1dfde46feeb",
     "packages": [],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "websyspro/commons",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/websyspro/commons.git",
+                "reference": "346dd327bf4df867bad5a728ea0eb9b81a51c21c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/websyspro/commons/zipball/346dd327bf4df867bad5a728ea0eb9b81a51c21c",
+                "reference": "346dd327bf4df867bad5a728ea0eb9b81a51c21c",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Websyspro\\Commons\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "websyspro",
+                    "email": "websyspro.services@gmail.com"
+                }
+            ],
+            "description": "Generic utility helpers for PHP components (arrays, files, strings, types, and identifiers).",
+            "support": {
+                "issues": "https://github.com/websyspro/commons/issues",
+                "source": "https://github.com/websyspro/commons/tree/main"
+            },
+            "time": "2026-01-14T17:43:28+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "websyspro/commons": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},

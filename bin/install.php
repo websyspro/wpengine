@@ -3,17 +3,9 @@
 
 require __DIR__ . "/../../../autoload.php";
 
-use Websyspro\WpEngine\Shareds\WordPressCrawler;
-use Websyspro\WpEngine\Shareds\TreeFilter;
-use Websyspro\WpEngine\Shareds\TreeDownloader;
+use Websyspro\WpEngine\Shareds\WordpressPackage;
 
-$version = '6.9';
-$url     = "https://core.svn.wordpress.org/tags/{$version}/";
-$target  = getcwd() . '/vendor/wpcore';
+$version = "6.7";
 
-$crawler = new WordPressCrawler();
-$tree    = $crawler->crawl($url);
-
-$core    = TreeFilter::filter($tree);
-
-TreeDownloader::download($core, $target);
+$wordpressInstall = new WordpressPackage( $version );
+$wordpressInstall->install();

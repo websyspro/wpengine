@@ -16,5 +16,8 @@
       "wordpress": "6.9",
       "locale": "pt_BR"
     }
+  },
+  "require-dev": {
+    "websyspro/commons": "dev-main"
   }
 }
