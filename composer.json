@@ -9,7 +9,7 @@
     }
   },
   "bin": [
-    "bin/install.php"
+    "bin/install"
   ],
   "extra": {
     "wp-engine": {
