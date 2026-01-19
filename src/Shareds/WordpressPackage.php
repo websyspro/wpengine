@@ -5,8 +5,11 @@ namespace Websyspro\WpEngine\Shareds;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use Websyspro\Commons\Collection;
 use Websyspro\Commons\Util;
 use ZipArchive;
+
+use function PHPSTORM_META\map;
 
 /**
  * WordpressInstall
@@ -31,7 +34,8 @@ class WordpressPackage
     $this->targetDirectory();
     $this->downloadSource();
     $this->extractSource();
-    $this->moveToTarget();    
+    $this->moveToTarget(); 
+    $this->createConfig();   
   }
 
   private function getSourceDirectory(
@@ -164,5 +168,105 @@ class WordpressPackage
         $this->moveFile( $splFileInfo );
       }
     } 
+  }
+
+  private function getSalt(
+    array $keys = []
+  ): array {
+    preg_match_all(
+      "#define\('([^']+)',\s*'([^']+)'\);#", 
+      file_get_contents(
+        "https://api.wordpress.org/secret-key/1.1/salt/"
+      ), $matches
+    );
+    
+    foreach ($matches[1] as $index => $key) {
+      $keys[$key] = Util::sprintFormat(
+        "define( '%s', '%s' )", [
+          $key, $matches[2][$index]
+        ]
+      );
+    }    
+
+    return $keys;
+  }
+
+  private function createConfig(
+  ): void {
+    $salt = $this->getSalt();
+    $createConfig = new Collection(
+      [
+        "<?php",
+        "",
+        "/*",
+        " * Database settings",
+        " **/",
+        "define( 'DB_NAME', 'composer' );",
+        "define( 'DB_USER', 'root' );",
+        "define( 'DB_PASSWORD', 'qazwsx' );",
+        "define( 'DB_HOST', 'localhost' );",
+        "define( 'DB_CHARSET', 'utf8mb4' );",
+        "define( 'DB_COLLATE', '' );",
+        "",
+        "/*",
+        " * Database settings",
+        " **/",
+        "{$salt['AUTH_KEY']};",
+        "{$salt['SECURE_AUTH_KEY']};",
+        "{$salt['LOGGED_IN_KEY']};",
+        "{$salt['NONCE_KEY']};",
+        "{$salt['AUTH_SALT']};",
+        "{$salt['SECURE_AUTH_SALT']};",
+        "{$salt['LOGGED_IN_SALT']};",
+        "{$salt['NONCE_SALT']};",
+        "",
+        "/*",
+        " * WordPress database table prefix.",
+        " **/",
+        "\$table_prefix = 'wp_';",
+        "",
+        "/*",
+        " * WordPress debugging mode.",
+        " **/",
+        "define( 'WP_DEBUG', false );",
+        "",
+        "/*",
+        " * Absolute path to the WordPress directory.",
+        " **/",
+        "if( defined( 'ABSPATH' ) === false ){",
+        "\tdefine( 'ABSPATH', __DIR__ . '/' );",
+        "}",
+        "",
+        "/*",
+        " * Paths customizados.",
+        " **/",
+        "define( 'WP_CONTENT_DIR', ROUTE_ROOT . '/src' );",
+        "define( 'WP_CONTENT_URL', 'http://' . \$_SERVER['HTTP_HOST'] );",
+        "define( 'WP_SITEURL', 'http://' . \$_SERVER['HTTP_HOST'] );",
+        "define( 'WP_HOME', 'http://' . \$_SERVER['HTTP_HOST'] );",
+        "",
+        "/*",
+        " * Includes Plugings.",
+        " **/",
+        "require_once ABSPATH . 'wp-includes/plugin.php';",
+        "",
+        "/*",
+        " * Includes Plugings.",
+        " **/",
+        "if( php_sapi_name() === 'cli-server' ){",
+        "\tadd_filter( 'got_url_rewrite', '__return_true' );",
+        "}",
+        "",
+        "/*",
+        " * Sets up WordPress vars and included files..",
+        " **/",
+        "require_once ABSPATH . 'wp-settings.php';"
+      ]
+    );
+
+    file_put_contents(
+      __DIR__ . "/../Core/wp-config.php", 
+      $createConfig->joinWithBreak()
+    );
   }
 }
