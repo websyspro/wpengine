@@ -7,6 +7,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Websyspro\Commons\Util;
 use SplFileInfo;
+use Websyspro\WpEngine\ComposerConfigReader;
 use ZipArchive;
 
 /**
@@ -17,6 +18,7 @@ use ZipArchive;
  */
 class WordpressPackage
 {
+  public string $version;
   /** @var string Path to directory containing downloaded zip file */
   public string $sourceDirectoryZip;
   
@@ -35,7 +37,6 @@ class WordpressPackage
    * @param string $version WordPress version to install (e.g., "6.4.2")
    */
   public function __construct(
-    public string $version
   ){}
   
   /**
@@ -47,6 +48,7 @@ class WordpressPackage
    */
   public function install(
   ): void {
+    $this->sourceWordPressVersion();
     /** Setup source directories */
     $this->sourceDirectory();
     /** Setup target directories */
@@ -59,6 +61,26 @@ class WordpressPackage
     $this->moveToTarget(); 
     /** Generate wp-config.php */
     $this->createConfig();   
+  }
+
+  private function sourceWordPressVersion(
+  ): void {
+    if( defined( "ROUTE_ROOT" ) === false ){
+      define( "ROUTE_ROOT", __DIR__ );
+    }
+
+    $composerFile = Util::join( 
+      DIRECTORY_SEPARATOR, 
+      [ ROUTE_ROOT, "composer.json" ]
+    );
+
+    if( file_exists( $composerFile )){
+      $composerConfig = ComposerConfigReader::getWpEngineConfig( 
+        $composerFile 
+      );
+
+      $this->version = $composerConfig[ "extra" ][ "wordpress/version" ];
+    }
   }
 
   /**
