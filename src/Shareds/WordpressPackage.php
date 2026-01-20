@@ -242,7 +242,15 @@ class WordpressPackage
     );
 
     /** Output file being copied */
-    fwrite( STDOUT, "\033[2K\r  - Copying  \033[32m{$path}" . DIRECTORY_SEPARATOR . "{$splFileInfo->getFilename()}\033[0m" );
+    fwrite( 
+      STDOUT,
+      Util::sprintFormat(
+        "\033[2K\r  - Installing file \033[32m%s\033[0m", [ Util::join( 
+          DIRECTORY_SEPARATOR,
+          [ $path, $splFileInfo->getFilename() ]
+        )]
+      )
+    );
 
     /** Create File instance to copy file to target */
     return new File(
@@ -278,7 +286,7 @@ class WordpressPackage
       }
     } 
 
-    fwrite( STDOUT, "\n" );
+    fwrite( STDOUT, "\033[2K\r" );
   }
 
   /**
@@ -399,6 +407,6 @@ class WordpressPackage
     );
 
     /** Output success message */
-    fwrite( STDOUT, "\n\033[0m  - Configuration file created successfully\n" );
+    fwrite( STDOUT, "\n\033[0m  - Installation completed successfully.\n" );
   }
 }
