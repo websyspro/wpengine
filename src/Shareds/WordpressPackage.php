@@ -2,7 +2,6 @@
 
 namespace Websyspro\WpEngine\Shareds;
 
-use Composer\InstalledVersions;
 use Websyspro\Commons\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
