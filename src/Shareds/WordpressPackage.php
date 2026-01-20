@@ -277,6 +277,8 @@ class WordpressPackage
         $this->moveFile( $splFileInfo );
       }
     } 
+
+    fwrite( STDOUT, "\n" );
   }
 
   /**
