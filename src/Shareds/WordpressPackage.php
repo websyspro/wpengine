@@ -9,8 +9,6 @@ use Websyspro\Commons\Collection;
 use Websyspro\Commons\Util;
 use ZipArchive;
 
-use function PHPSTORM_META\map;
-
 /**
  * WordpressInstall
  * 
@@ -124,6 +122,8 @@ class WordpressPackage
       $this->sourceZip(), 
       fopen( $this->sourceUrl(), "r" )
     );
+
+    fwrite( STDOUT, "Downloaded: {$this->sourceZip()}\n" );
   }
 
   private function extractSource(
@@ -132,6 +132,8 @@ class WordpressPackage
     $zipArchive->open( $this->sourceZip());
     $zipArchive->extractTo( $this->sourceDirectoryExtract);
     $zipArchive->close();
+
+    fwrite( STDOUT, "Extracted: {$this->sourceZip()}\n" );
   }
 
   private function moveFile(
@@ -142,6 +144,8 @@ class WordpressPackage
       DIRECTORY_SEPARATOR, [ "extract", "wordpress" ]),
       $splFileInfo->getPath()
     );
+
+    fwrite( STDOUT, "Copy {$splFileInfo->getFilename()}\n" );
 
     return new File(
       $this->sourceDirectoryExtractWordpress,
@@ -268,5 +272,7 @@ class WordpressPackage
       __DIR__ . "/../Core/wp-config.php", 
       $createConfig->joinWithBreak()
     );
+
+    fwrite( STDOUT, "Config created\n" );
   }
 }
