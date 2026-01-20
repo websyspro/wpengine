@@ -91,16 +91,8 @@ class WordpressPackage
    */
   private function sourceConfigReader(
   ): void {
-    /* Define ROUTE_ROOT constant if not already defined */
-    if( defined( "ROUTE_ROOT" ) === false ){
-      define( "ROUTE_ROOT", __DIR__ );
-    }
-
     /* Build path to composer.json file */
-    $composerConfig = Util::join( 
-      DIRECTORY_SEPARATOR, 
-      [ ROUTE_ROOT, "composer.json" ]
-    );
+    $composerConfig = __DIR__ . "/../../../../../composer.json";
 
     /* Check if composer.json exists and parse it */
     if( file_exists( $composerConfig )){
