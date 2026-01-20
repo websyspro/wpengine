@@ -243,15 +243,17 @@ class WordpressPackage
       $splFileInfo->getPath()
     );
 
+    $perc = bcmul(
+      bcdiv( $index, $all, 4 ), 
+      100, 2
+    );
+
     /** Output file being copied */
     fwrite( 
       STDOUT,
       Util::sprintFormat(
-        "\033[2K\r  - Installing %s de %s file \033[32m%s\033[0m", [ 
-          $index, $all, Util::join( 
-            DIRECTORY_SEPARATOR,
-            [ $path, $splFileInfo->getFilename() ]
-          )
+        "\033[2K\r  - Installing %s de %s file %s\%: \033[32m%s\033[0m", [ 
+          $index, $all, $perc, $splFileInfo->getFilename()
         ]
       )
     );
