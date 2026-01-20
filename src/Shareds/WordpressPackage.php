@@ -252,8 +252,8 @@ class WordpressPackage
     fwrite( 
       STDOUT,
       Util::sprintFormat(
-        "\033[2K\r  - Installing %s de %s file %s\%: \033[32m%s\033[0m", [ 
-          $index, $all, $perc, $splFileInfo->getFilename()
+        "\033[2K\r  - Installing %s de %s file %s: \033[32m%s\033[0m", [ 
+          $index, $all, "{$perc}%", $splFileInfo->getFilename()
         ]
       )
     );
