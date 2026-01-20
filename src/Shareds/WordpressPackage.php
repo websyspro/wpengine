@@ -232,7 +232,9 @@ class WordpressPackage
    * @return File New File instance representing the copied file
    */
   private function moveFile(
-    SplFileInfo $splFileInfo
+    SplFileInfo $splFileInfo,
+    int $index = 0,
+    int $all = 0
   ): File {
     /** Extract relative path from full path */
     [, $path ] = explode(
@@ -245,10 +247,12 @@ class WordpressPackage
     fwrite( 
       STDOUT,
       Util::sprintFormat(
-        "\033[2K\r  - Installing file \033[32m%s\033[0m", [ Util::join( 
-          DIRECTORY_SEPARATOR,
-          [ $path, $splFileInfo->getFilename() ]
-        )]
+        "\033[2K\r  - Installing %s de %s file \033[32m%s\033[0m", [ 
+          $index, $all, Util::join( 
+            DIRECTORY_SEPARATOR,
+            [ $path, $splFileInfo->getFilename() ]
+          )
+        ]
       )
     );
 
@@ -270,6 +274,7 @@ class WordpressPackage
    * @return void
    */
   private function moveToTarget(
+    array $splFileInfoArr = []
   ): void {
     /** Create recursive iterator for WordPress directory */
     $splFileInfoIterator = new RecursiveIteratorIterator(
@@ -279,11 +284,20 @@ class WordpressPackage
       )
     );
 
-    /** Iterate and copy each file */
+
     foreach($splFileInfoIterator as $splFileInfo){
       if( $splFileInfo->isFile() ){
-        $this->moveFile( $splFileInfo );
-      }
+        $splFileInfoArr[] = $splFileInfo;
+      } 
+    }
+
+    /** Iterate and copy each file */
+    foreach($splFileInfoArr as $index =>  $splFileInfo){
+      $this->moveFile(
+        $splFileInfo, 
+        $index + 1, 
+        Util::sizeArray( $splFileInfoArr )
+      );
     } 
 
     fwrite( STDOUT, "\033[2K\r" );
@@ -407,6 +421,6 @@ class WordpressPackage
     );
 
     /** Output success message */
-    fwrite( STDOUT, "\n\033[0m  - Installation completed successfully.\n" );
+    fwrite( STDOUT, "\033[0m  - Installation completed successfully.\n" );
   }
 }
