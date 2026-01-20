@@ -356,7 +356,7 @@ class WordpressPackage
         "define( 'DB_NAME', 'composer' );",
         "define( 'DB_USER', 'root' );",
         "define( 'DB_PASSWORD', 'qazwsx' );",
-        "define( 'DB_HOST', 'localhost:3308' );",
+        "define( 'DB_HOST', 'localhost' );",
         "define( 'DB_CHARSET', 'utf8mb4' );",
         "define( 'DB_COLLATE', '' );",
         "",
