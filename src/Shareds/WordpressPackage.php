@@ -48,7 +48,7 @@ class WordpressPackage
    */
   public function install(
   ): void {
-    $this->sourceWordPressVersion();
+    $this->sourceConfigReader();
     /** Setup source directories */
     $this->sourceDirectory();
     /** Setup target directories */
@@ -63,7 +63,7 @@ class WordpressPackage
     $this->createConfig();   
   }
 
-  private function sourceWordPressVersion(
+  private function sourceConfigReader(
   ): void {
     if( defined( "ROUTE_ROOT" ) === false ){
       define( "ROUTE_ROOT", __DIR__ );
