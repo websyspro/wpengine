@@ -423,6 +423,7 @@ class WordpressPackage
     );
 
     /** Output success message */
+    fwrite( STDOUT, "\033[0m  - WordPress configuration file created (\033[32mwp-config.php\033[0m).\n" );
     fwrite( STDOUT, "\033[0m  - Installation completed successfully.\n" );
   }
 }
