@@ -242,7 +242,7 @@ class WordpressPackage
     );
 
     /** Output file being copied */
-    fwrite( STDOUT, "\033[2K\r  - Copying  \033[32m{$splFileInfo->getFilename()}\033[0m\n" );
+    fwrite( STDOUT, "\033[2K\r  - Copying  \033[32m{$splFileInfo->getFilename()}\033[0m" );
 
     /** Create File instance to copy file to target */
     return new File(
@@ -397,6 +397,6 @@ class WordpressPackage
     );
 
     /** Output success message */
-    fwrite( STDOUT, "\033[32mConfiguration file created successfully\033[0m\n" );
+    fwrite( STDOUT, "\033[0m  - Configuration file created successfully\n" );
   }
 }
