@@ -205,7 +205,7 @@ class WordpressPackage
     );
 
     /** Output success message */
-    fwrite( STDOUT, "Downloaded: \033[32m{$this->sourceZip()}\033[0m\n" );
+    fwrite( STDOUT, "  - Downloaded: \033[32m{$this->sourceZip()}\033[0m\n" );
   }
 
   /**
@@ -222,7 +222,7 @@ class WordpressPackage
     $zipArchive->close();
 
     /** Output success message */
-    fwrite( STDOUT, "Extracted: \033[32m{$this->sourceZip()}\033[0m\n" );
+    fwrite( STDOUT, "  - Extracted: \033[32m{$this->sourceZip()}\033[0m\n" );
   }
 
   /**
@@ -242,7 +242,7 @@ class WordpressPackage
     );
 
     /** Output file being copied */
-    fwrite( STDOUT, "Copying  \033[32m{$splFileInfo->getFilename()}\033[0m\n" );
+    fwrite( STDOUT, "\033[2K\r  - Copying  \033[32m{$splFileInfo->getFilename()}\033[0m\n" );
 
     /** Create File instance to copy file to target */
     return new File(
