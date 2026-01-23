@@ -513,6 +513,13 @@ class WordpressPackage
         "}",
         "",
         "/*",
+        " * Includes AfterSetupThems.",
+        " **/",        
+        "add_action( 'after_setup_theme', function () {",
+        "\tadd_theme_support( 'post-thumbnails' );",
+        "});",        
+        "",
+        "/*",
         " * Sets up WordPress vars and included files..",
         " **/",
         "require_once ABSPATH . 'wp-settings.php';"
