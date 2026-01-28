@@ -5,7 +5,5 @@ require __DIR__ . "/../../../autoload.php";
 
 use Websyspro\WpEngine\Shareds\WordpressPackage;
 
-$version = "6.9";
-
-$wordpressInstall = new WordpressPackage( $version );
+$wordpressInstall = new WordpressPackage();
 $wordpressInstall->install();

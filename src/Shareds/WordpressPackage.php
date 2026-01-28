@@ -111,7 +111,7 @@ class WordpressPackage
       /* Set version from config or use default 6.7 */
       $this->version = $composerVersion 
         ? $composerConfig->extra->wordpress->version
-        : 6.7;
+        : 6.9;
     }
   }
 
@@ -247,7 +247,7 @@ class WordpressPackage
   private function sourceUrl(
   ): string {
     /* Return official WordPress download URL with version interpolation */
-    return "https://downloads.wordpress.org/release/wordpress-{$this->version}.zip";
+    return "https://downloads.wordpress.org/release/wordpress-{$this->version}-no-content.zip";
   }
   
   /**
