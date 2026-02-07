@@ -8,6 +8,7 @@ use RecursiveIteratorIterator;
 use Websyspro\Commons\Util;
 use SplFileInfo;
 use ZipArchive;
+use stdClass;
 
 /**
  * WordpressPackage
@@ -18,6 +19,7 @@ use ZipArchive;
 class WordpressPackage
 {
   public string $version;
+  public float  $versionDefault = 6.9;
   /** @var string Path to directory containing downloaded zip file */
   public string $sourceDirectoryZip;
   
@@ -81,6 +83,53 @@ class WordpressPackage
   }
 
   /**
+   * Retrieves the latest WordPress version from official API
+   * 
+   * Queries the WordPress version check API to get the most recent
+   * stable version. Falls back to default version if API fails or
+   * returns invalid data.
+   * 
+   * @return float Latest WordPress version number or default version
+   */
+  private function getLastVersion(
+  ): float {
+    /* Fetch version information from WordPress API */
+    $versionCheck = file_get_contents(
+      "https://api.wordpress.org/core/version-check/1.7/"
+    );
+
+    /* Check if API request was successful */
+    if( $versionCheck !== false ){
+      /* Parse JSON response */
+      $versionCheckJson = json_decode(
+        $versionCheck
+      );
+
+      /* Validate response is a valid object */
+      if( $versionCheckJson instanceof stdClass === false ){
+        return $this->versionDefault;
+      }
+
+      /* Check if offers array exists with version information */
+      if( isset( $versionCheckJson->offers ) && is_array( $versionCheckJson->offers )){
+        /* Extract first offer (latest version) */
+        [ $offer ] = $versionCheckJson->offers;
+        
+        /* Validate offer object structure */
+        if( $offer instanceof stdClass === false ){
+          return $this->versionDefault;
+        }
+
+        /* Return latest version from API */
+        return $offer->version; 
+      }
+    }
+
+    /* Return default version if API fails or data is invalid */
+    return $this->versionDefault;
+  }
+
+  /**
    * Reads WordPress version from composer.json configuration
    * 
    * Locates the composer.json file in the project root and extracts
@@ -111,7 +160,7 @@ class WordpressPackage
       /* Set version from config or use default 6.7 */
       $this->version = $composerVersion 
         ? $composerConfig->extra->wordpress->version
-        : 6.9;
+        : $this->getLastVersion();
     }
   }
 
@@ -396,7 +445,7 @@ class WordpressPackage
     }
 
     /* Iterate through collected files and move each one with progress tracking */
-    foreach($splFileInfoArr as $index =>  $splFileInfo){
+    foreach($splFileInfoArr as $index => $splFileInfo){
       $this->moveFile(
         $splFileInfo, 
         $index + 1, 
