@@ -11,13 +11,19 @@
   "bin": [
     "bin/install"
   ],
+  "scripts": {
+    "publish": "php vendor/bin/publish"
+  },
   "extra": {
     "wp-engine": {
       "wordpress": "6.9",
       "locale": "pt_BR"
     }
   },
-  "require-dev": {
-    "websyspro/commons": "dev-main"
-  }
+  "require": {
+    "websyspro/package": "^1.0",
+    "websyspro/utils": "^1.0",
+    "websyspro/logger": "^1.0"
+  },
+  "version": "1.0.1"
 }

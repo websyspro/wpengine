@@ -2,11 +2,11 @@
 
 namespace Websyspro\WpEngine\Shareds;
 
-use Websyspro\Commons\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Websyspro\Commons\Util;
 use SplFileInfo;
+use Websyspro\Utils\Collection;
 use ZipArchive;
 use stdClass;
 
@@ -18,7 +18,6 @@ use stdClass;
  */
 class WordpressPackage
 {
-  public string $version;
   public float  $versionDefault = 6.9;
   /** @var string Path to directory containing downloaded zip file */
   public string $sourceDirectoryZip;
@@ -40,6 +39,8 @@ class WordpressPackage
    * 
    * @param string $version WordPress version to install (e.g., "6.4.2")
    */
+  public string $version;
+
   public function __construct(
   ){
     /* Empty constructor - version is set during install process */
@@ -578,7 +579,7 @@ class WordpressPackage
     /** Write configuration to wp-config.php */
     file_put_contents(
       __DIR__ . "/../Core/wp-config.php", 
-      $createConfig->joinWithBreak()
+      $createConfig->join( PHP_EOL )
     );
 
     /** Output success message */

@@ -4,28 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7fe0585ef93919fdeadf1dfde46feeb",
-    "packages": [],
-    "packages-dev": [
+    "content-hash": "f3518869ad970d3523a757f331a88af2",
+    "packages": [
         {
-            "name": "websyspro/commons",
-            "version": "dev-main",
+            "name": "websyspro/logger",
+            "version": "1.0.36",
             "source": {
                 "type": "git",
-                "url": "https://github.com/websyspro/commons.git",
-                "reference": "a74adb057bc5e3fcc7d8134fd274beb64f5a8ad6"
+                "url": "https://github.com/websyspro/logger.git",
+                "reference": "eb4ceddca4e1557a9731d1ea53dfafa18db5a546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/websyspro/commons/zipball/a74adb057bc5e3fcc7d8134fd274beb64f5a8ad6",
-                "reference": "a74adb057bc5e3fcc7d8134fd274beb64f5a8ad6",
+                "url": "https://api.github.com/repos/websyspro/logger/zipball/eb4ceddca4e1557a9731d1ea53dfafa18db5a546",
+                "reference": "eb4ceddca4e1557a9731d1ea53dfafa18db5a546",
                 "shasum": ""
             },
-            "default-branch": true,
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "websyspro/package": "^1.0"
+            },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Websyspro\\Commons\\": "src/"
+                    "Websyspro\\Logger\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -38,19 +42,98 @@
                     "email": "websyspro.services@gmail.com"
                 }
             ],
-            "description": "Generic utility helpers for PHP components (arrays, files, strings, types, and identifiers).",
+            "description": "Library for logs in server api",
             "support": {
-                "issues": "https://github.com/websyspro/commons/issues",
-                "source": "https://github.com/websyspro/commons/tree/main"
+                "issues": "https://github.com/websyspro/logger/issues",
+                "source": "https://github.com/websyspro/logger/tree/1.0.36"
             },
-            "time": "2026-01-17T21:48:23+00:00"
+            "time": "2026-08-11T19:54:04+00:00"
+        },
+        {
+            "name": "websyspro/package",
+            "version": "1.0.82",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/websyspro/package.git",
+                "reference": "39fef17b21aac249a297ed98a1ce0eef9f13d95f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/websyspro/package/zipball/39fef17b21aac249a297ed98a1ce0eef9f13d95f",
+                "reference": "39fef17b21aac249a297ed98a1ce0eef9f13d95f",
+                "shasum": ""
+            },
+            "bin": [
+                "bin/publish"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Websyspro\\Package\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "websyspro",
+                    "email": "websyspro.services@gmail.com"
+                }
+            ],
+            "description": "Version Management",
+            "support": {
+                "issues": "https://github.com/websyspro/package/issues",
+                "source": "https://github.com/websyspro/package/tree/1.0.82"
+            },
+            "time": "2026-08-10T22:31:17+00:00"
+        },
+        {
+            "name": "websyspro/utils",
+            "version": "1.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/websyspro/utils.git",
+                "reference": "881e8b52248814933b6ad25ba3a96c3d6d5ee880"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/websyspro/utils/zipball/881e8b52248814933b6ad25ba3a96c3d6d5ee880",
+                "reference": "881e8b52248814933b6ad25ba3a96c3d6d5ee880",
+                "shasum": ""
+            },
+            "require": {
+                "websyspro/package": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Websyspro\\Utils\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "websyspro",
+                    "email": "websyspro.services@gmail.com"
+                }
+            ],
+            "description": "Set of features for front-end and back-end development",
+            "support": {
+                "issues": "https://github.com/websyspro/utils/issues",
+                "source": "https://github.com/websyspro/utils/tree/1.0.12"
+            },
+            "time": "2026-08-08T19:22:34+00:00"
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "websyspro/commons": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
