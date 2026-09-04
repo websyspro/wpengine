@@ -1,6 +1,6 @@
 {
   "name": "websyspro/wp-engine",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "WordPress runtime installer for Composer-based projects",
   "type": "library",
   "license": "MIT",
@@ -24,6 +24,7 @@
   "require": {
     "websyspro/package": "^1.0",
     "websyspro/utils": "^1.0",
-    "websyspro/logger": "^1.0"
+    "websyspro/logger": "^1.0",
+    "websyspro/devtools": "^1.0"
   }
 }

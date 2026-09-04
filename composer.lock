@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3518869ad970d3523a757f331a88af2",
+    "content-hash": "ce54b2ee8b694701b3b28ba55e891b26",
     "packages": [
+        {
+            "name": "websyspro/devtools",
+            "version": "1.0.130",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/websyspro/devtools.git",
+                "reference": "9540e346540b2a7abff3cbd1876204f46bba8f5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/websyspro/devtools/zipball/9540e346540b2a7abff3cbd1876204f46bba8f5f",
+                "reference": "9540e346540b2a7abff3cbd1876204f46bba8f5f",
+                "shasum": ""
+            },
+            "require": {
+                "websyspro/logger": "^1.0",
+                "websyspro/package": "^1.0",
+                "websyspro/utils": "^1.0"
+            },
+            "bin": [
+                "bin/server-restart",
+                "bin/browser-reload"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Websyspro\\DevTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "websyspro",
+                    "email": "websyspro.services@gmail.com"
+                }
+            ],
+            "description": "Set of features for hot reloads during development",
+            "support": {
+                "issues": "https://github.com/websyspro/devtools/issues",
+                "source": "https://github.com/websyspro/devtools/tree/1.0.130"
+            },
+            "time": "2026-09-01T21:58:12+00:00"
+        },
         {
             "name": "websyspro/logger",
             "version": "1.0.36",
