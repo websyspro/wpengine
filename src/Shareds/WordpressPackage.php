@@ -309,7 +309,7 @@ class WordpressPackage
         "/*",
         " * Paths customizados.",
         " **/",
-        "define( 'WP_CONTENT_DIR', ROUTE_ROOT . '/src' );",
+        "define( 'WP_CONTENT_DIR', DIR_BASE . '/src' );",
         "define( 'WP_CONTENT_URL', 'http://' . \$_SERVER['HTTP_HOST'] );",
         "define( 'WP_SITEURL', 'http://' . \$_SERVER['HTTP_HOST'] );",
         "define( 'WP_HOME', 'http://' . \$_SERVER['HTTP_HOST'] );",
