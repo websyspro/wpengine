@@ -11,6 +11,7 @@ use ZipArchive;
 use stdClass;
 use function is_array;
 use function sprintf;
+use function sizeof;
 
 class WordpressPackage
 {
@@ -88,7 +89,7 @@ class WordpressPackage
   private function getSourceDirectory(
     string|null $folder = null
   ): string {
-    return Util::join( 
+    return implode( 
       DIRECTORY_SEPARATOR, 
       [ sys_get_temp_dir(), "wordpress", $this->version, $folder ]
     );
@@ -97,9 +98,7 @@ class WordpressPackage
   private function mkdir(
     array $directorys
   ): void {
-    Util::mapper( $directorys, fn(string $directory) => (
-      @mkdir($directory, 0777, true)
-    ));
+    array_map( fn(string $directory) => @mkdir($directory, 0777, true), $directorys );
   }
 
 
@@ -110,7 +109,7 @@ class WordpressPackage
       $this->sourceDirectoryExtractWordpress ] = [
       $this->getSourceDirectory( "zip" ), 
       $this->getSourceDirectory( "extract" ),
-      $this->getSourceDirectory( Util::join(
+      $this->getSourceDirectory( implode(
         DIRECTORY_SEPARATOR, 
         [ "extract", "wordpress" ]
       ))
@@ -129,7 +128,7 @@ class WordpressPackage
       "src", __DIR__
     );
 
-    return Util::join(
+    return implode(
       DIRECTORY_SEPARATOR, [
         preg_replace( [ 
           "#^[\\\\/]+#", "#[\\\\/]+$#", "#^/#", "#/$#"
@@ -158,7 +157,7 @@ class WordpressPackage
   
   private function sourceZip(
   ): string {
-    return Util::join( 
+    return implode( 
       DIRECTORY_SEPARATOR, [
         $this->sourceDirectoryZip, "realese.zip" 
       ]
@@ -191,7 +190,7 @@ class WordpressPackage
     int $all = 0
   ): File {
     [, $path ] = explode(
-      Util::join( DIRECTORY_SEPARATOR, [ "extract", "wordpress" ]), $splFileInfo->getPath()
+      implode( DIRECTORY_SEPARATOR, [ "extract", "wordpress" ]), $splFileInfo->getPath()
     );
 
     $perc = bcmul(
@@ -201,10 +200,8 @@ class WordpressPackage
 
     fwrite( 
       STDOUT,
-      Util::sprintFormat(
-        "\033[2K\r  - Installing %s de %s file %s: \033[32m%s\033[0m", [ 
-          $index, $all, "{$perc}%", $splFileInfo->getFilename()
-        ]
+      sprintf( "\033[2K\r  - Installing %s de %s file %s: \033[32m%s\033[0m",  
+        $index, $all, "{$perc}%", $splFileInfo->getFilename()
       )
     );
 
@@ -239,7 +236,7 @@ class WordpressPackage
       $this->moveFile(
         $splFileInfo, 
         $index + 1, 
-        Util::sizeArray( $splFileInfoArr )
+        sizeof( $splFileInfoArr )
       );
     } 
 
@@ -257,11 +254,7 @@ class WordpressPackage
     );
     
     foreach ($matches[1] as $index => $key) {
-      $keys[$key] = Util::sprintFormat(
-        "define( '%s', '%s' )", [
-          $key, $matches[2][$index]
-        ]
-      );
+      $keys[$key] = sprintf( "define( '%s', '%s' )", $key, $matches[2][$index]);
     }    
 
     return $keys;
