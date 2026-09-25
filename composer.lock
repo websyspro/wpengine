@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25e83caa56d9a7f48da43cda29c4efd4",
+    "content-hash": "89a2bc5741b8e31c3ea0d3817d9f3081",
     "packages": [
         {
             "name": "websyspro/devtools",
@@ -137,16 +137,16 @@
         },
         {
             "name": "websyspro/utils",
-            "version": "1.0.13",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/websyspro/utils.git",
-                "reference": "b76a59b3d7960a150652f049ac8d92925db8a032"
+                "reference": "5ef71c076bd7cad021a928eef79fb854b7e3f858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/websyspro/utils/zipball/b76a59b3d7960a150652f049ac8d92925db8a032",
-                "reference": "b76a59b3d7960a150652f049ac8d92925db8a032",
+                "url": "https://api.github.com/repos/websyspro/utils/zipball/5ef71c076bd7cad021a928eef79fb854b7e3f858",
+                "reference": "5ef71c076bd7cad021a928eef79fb854b7e3f858",
                 "shasum": ""
             },
             "require": {
@@ -171,9 +171,9 @@
             "description": "Set of features for front-end and back-end development",
             "support": {
                 "issues": "https://github.com/websyspro/utils/issues",
-                "source": "https://github.com/websyspro/utils/tree/1.0.13"
+                "source": "https://github.com/websyspro/utils/tree/1.0.14"
             },
-            "time": "2026-08-14T18:48:06+00:00"
+            "time": "2026-09-25T20:11:56+00:00"
         }
     ],
     "packages-dev": [],

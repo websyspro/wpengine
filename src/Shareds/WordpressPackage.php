@@ -67,7 +67,7 @@ class WordpressPackage
   private function sourceConfigReader(
   ): void {
     $composerConfig = sprintf(
-      "%s%scomposer.php", realpath(
+      "%s%scomposer.json", realpath(
         dirname( __DIR__, 5 ) 
       ), DIRECTORY_SEPARATOR
     );
