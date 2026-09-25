@@ -2,16 +2,15 @@
 
 namespace Websyspro\WpEngine\Shareds;
 
+use Websyspro\Utils\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Websyspro\Commons\Util;
-use SplFileInfo;
-use Websyspro\Utils\Collection;
-use ZipArchive;
-use stdClass;
 use function is_array;
 use function sprintf;
 use function sizeof;
+use SplFileInfo;
+use ZipArchive;
+use stdClass;
 
 class WordpressPackage
 {
@@ -67,7 +66,11 @@ class WordpressPackage
 
   private function sourceConfigReader(
   ): void {
-    $composerConfig = __DIR__ . "/../../../../../composer.json";
+    $composerConfig = sprintf(
+      "%s%scomposer.php", realpath(
+        dirname( __DIR__, 5 ) 
+      ), DIRECTORY_SEPARATOR
+    );
 
     if( file_exists( $composerConfig )){
       $composerConfig = json_decode(
