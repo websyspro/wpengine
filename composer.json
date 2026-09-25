@@ -1,6 +1,6 @@
 {
   "name": "websyspro/wp-engine",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "WordPress runtime installer for Composer-based projects",
   "type": "library",
   "license": "MIT",

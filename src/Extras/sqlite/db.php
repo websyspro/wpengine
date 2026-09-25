@@ -9,7 +9,7 @@
 require_once __DIR__ . '/../database/version.php';
 
 // Require the constants file.
-require_once __DIR__ . '/../../constants.php';
+require_once __DIR__ . '/constants.php';
 
 // Bail early if DB_ENGINE is not defined as sqlite.
 if ( ! defined( 'DB_ENGINE' ) || 'sqlite' !== DB_ENGINE ) {
@@ -49,7 +49,6 @@ require_once __DIR__ . '/class-wp-sqlite-db.php';
 require_once __DIR__ . '/install-functions.php';
 
 $db_name         = defined( 'DB_NAME' ) ? DB_NAME : '';
-$GLOBALS['wpdb'] = new WP_SQLite_DB( $db_name );
 
-// Boot the Query Monitor plugin if it is active.
-require_once __DIR__ . '/../../integrations/query-monitor/boot.php';
+file_put_contents( "c:/Temp/db_name.txt", $db_name );
+$GLOBALS['wpdb'] = new WP_SQLite_DB( $db_name );
