@@ -273,6 +273,8 @@ class WordpressPackage
         "/*",
         " * Database settings",
         " **/",
+        "define( 'DATABASE_TYPE', getenv( 'DATABASE_TYPE' ));",
+        "define( 'DB_ENGINE', getenv( 'DB_ENGINE' ));",
         "define( 'DB_NAME', getenv( 'DB_NAME' ));",
         "define( 'DB_USER', getenv( 'DB_USER' ));",
         "define( 'DB_PASSWORD', getenv( 'DB_PASSWORD' ));",
