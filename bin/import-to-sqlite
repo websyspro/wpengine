@@ -15,10 +15,12 @@ defined( "BASE_DIR" ) || define(
   ) . DIRECTORY_SEPARATOR
 );
 
-require BASE_DIR . "vendor/autoload.php";
+require_once BASE_DIR . "vendor/autoload.php";
+require_once BASE_DIR . "vendor/websyspro/wpengine/src/Core/wp-load.php";
 
 use Websyspro\WpEngine\Shareds\WordpressImport;
+global $wpdb;
 
-$wordpressImport = new WordpressImport();
+$wordpressImport = new WordpressImport( "localhost", "3306", "edocente_admin", "root", "qazwsx", BASE_DIR, $wpdb );
 $wordpressImport->importStructureFromTable();
 $wordpressImport->importRegisterFromTable();

@@ -21,6 +21,7 @@ class WordpressPackage
   public string $targetDirectorySrcCore;
   public string $version;
   public object $composerJson;
+  public object $serverJson;
 
   public function __construct(
   ){}
@@ -88,6 +89,20 @@ class WordpressPackage
         ? $this->composerJson->extra->wordpress->version
         : $this->getLastVersion();
     }
+
+    $serverJson = sprintf(
+      "%s%sserver.json", realpath(
+        dirname( __DIR__, 5 ) 
+      ), DIRECTORY_SEPARATOR
+    );
+    
+    if( file_exists( $serverJson )){
+      $this->serverJson = json_decode(
+        file_get_contents(
+          $serverJson
+        )
+      );
+    }    
   }
 
   private function getSourceDirectory(
@@ -325,9 +340,9 @@ class WordpressPackage
         " * Paths customizados.",
         " **/",
         "define( 'WP_CONTENT_DIR', BASE_DIR . getenv( 'CONTENT_DIR' ));",
-        "define( 'WP_CONTENT_URL', 'http://' . \$_SERVER['HTTP_HOST'] );",
-        "define( 'WP_SITEURL', 'http://' . \$_SERVER['HTTP_HOST'] );",
-        "define( 'WP_HOME', 'http://' . \$_SERVER['HTTP_HOST'] );",
+        "define( 'WP_CONTENT_URL', 'http://localhost:{$this->serverJson->httpServerPort}' );",
+        "define( 'WP_SITEURL', 'http://localhost:{$this->serverJson->httpServerPort}' );",
+        "define( 'WP_HOME', 'http://localhost:{$this->serverJson->httpServerPort}' );",
         "",
         "/*",
         " * Includes Plugings.",
