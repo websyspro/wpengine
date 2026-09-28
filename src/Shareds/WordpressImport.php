@@ -16,11 +16,12 @@ class WordpressImport
   private PDO $handleSource;
   private PDO $handleTarget;
   private int $offSet;
+  private int $limit;
   private int $page;
   private array $rows;
   private array $fields;
-  private array $variables;
-  private array $values;
+  private array $variables = [];
+  private array $values = [];
 
   public function __construct(
     private string $host = "localhost",
@@ -75,22 +76,27 @@ class WordpressImport
   public function importRegisterFromTable(
   ): void {
     foreach( $this->selectTablesFromSource() as $row ){
-      if( in_array( $row->table_name, [ "wp_wfls_2fa_secrets", "wp_wfls_settings" ])){
+      if( in_array( $row->tableName, [ "wp_wfls_2fa_secrets", "wp_wfls_settings" ])){
         continue;
       }
 
-      if( $this->selectHasTableFromTarget( $row->table_name )){
+      if( $this->selectHasTableFromTarget( $row->tableName )){
         if( $this->handleTarget->query( "Delete From '{$row->tableName}'" )){
           Terminal::init()
             ->text( "Clear table:" )->spc()
             ->green( $row->tableName )->eof();
         }
 
-        $this->offSet = 512;
+        $this->limit = 512;
         $this->page = 0;
 
         do {
-          $this->rows = $this->selectRegister( $row->tableName );
+          $this->rows = [];
+
+          $this->selectOffSet();
+
+          $this->selectRegister( $row->tableName );
+
           if( $this->selectedRows()){
             foreach( $this->rows as $regster ){
               $this->fields = array_map( 
@@ -108,13 +114,16 @@ class WordpressImport
 
             try {
               $statement = $this->handleTarget->prepare(
-                sprintf( "Insert Into '%s' (%s) Values %s", 
+                sprintf( "Insert Into '{$row->tableName}' (%s) Values %s", 
                   implode( ", ", $this->fields ),
                   implode( ", ", $this->variables )
                 )
               );
 
               $statement->execute( $this->values );
+
+              Terminal::init()
+                ->spc()->brightCyan( "populated table" )->eof();
 
             } catch( PDOException $exception ){
               Terminal::init()
@@ -168,11 +177,16 @@ class WordpressImport
     return false;
   }
 
+  private function selectOffSet(
+  ): void {
+    $this->offSet = $this->page * $this->limit;
+  }
+
   private function selectRegisterFromUsers(
     string $tableName,
     string $tableNameKey
-  ): PDOStatement {
-    return $this->handleSource->prepare(
+  ): string {
+    return sprintf(
       "Select * 
          From {$tableName}
         Where {$tableName}.{$tableNameKey} in ( 
@@ -192,32 +206,28 @@ class WordpressImport
         Limit 0, 512 )
            As wp_usermeta )
            As wp_usermeta )
-        Limit ?, ?"
+        Limit {$this->offSet}, {$this->limit}"
     );
   }  
 
   private function selectRegisterDefault(
     string $tableName
-  ): PDOStatement {
-    return $this->handleSource->prepare(
-      "Select * From {$tableName} Limit ?, ?"
-    );
+  ): string {
+    return "Select * From {$tableName} Limit {$this->offSet}, {$this->limit}";
   }
 
   private function selectRegister(
     string $tableName
-  ): array {
-    $statement = match( $tableName ){
-      "wp_users" => $this->selectRegisterFromUsers( $tableName, "ID" ),
+  ): void {
+    $statement = $this->handleSource->query( match( $tableName ){
       "wp_usermeta" => $this->selectRegisterFromUsers( $tableName, "user_ID" ),
-        default => $this->selectRegisterDefault( $tableName )
-    };
+      "wp_users" => $this->selectRegisterFromUsers( $tableName, "ID" ),
+      default => $this->selectRegisterDefault( $tableName )
+    });
 
     if( $statement instanceof PDOStatement ){
-      return $statement->fetchAll( PDO::FETCH_ASSOC );
-    }
-
-    return [];
+      $this->rows = $statement->fetchAll( PDO::FETCH_ASSOC );
+    };
   }
 
   private function selectedRows(
