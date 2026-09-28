@@ -20,6 +20,7 @@ class WordpressPackage
   public string $sourceDirectoryExtractWordpress;
   public string $targetDirectorySrcCore;
   public string $version;
+  public object $composerJson;
 
   public function __construct(
   ){}
@@ -66,25 +67,25 @@ class WordpressPackage
 
   private function sourceConfigReader(
   ): void {
-    $composerConfig = sprintf(
+    $composerJson = sprintf(
       "%s%scomposer.json", realpath(
         dirname( __DIR__, 5 ) 
       ), DIRECTORY_SEPARATOR
     );
 
-    if( file_exists( $composerConfig )){
-      $composerConfig = json_decode(
+    if( file_exists( $composerJson )){
+      $this->composerJson = json_decode(
         file_get_contents(
-          $composerConfig
+          $composerJson
         )
       );
 
-      $composerVersion = isset( $composerConfig->extra ) 
-                      && isset( $composerConfig->extra->wordpress ) 
-                      && isset( $composerConfig->extra->wordpress->version );
+      $composerVersion = isset( $this->composerJson->extra ) 
+                      && isset( $this->composerJson->extra->wordpress ) 
+                      && isset( $this->composerJson->extra->wordpress->version );
 
       $this->version = $composerVersion 
-        ? $composerConfig->extra->wordpress->version
+        ? $this->composerJson->extra->wordpress->version
         : $this->getLastVersion();
     }
   }
@@ -323,7 +324,7 @@ class WordpressPackage
         "/*",
         " * Paths customizados.",
         " **/",
-        "define( 'WP_CONTENT_DIR', BASE_DIR . 'src' );",
+        "define( 'WP_CONTENT_DIR', BASE_DIR . getenv( 'CONTENT_DIR' ));",
         "define( 'WP_CONTENT_URL', 'http://' . \$_SERVER['HTTP_HOST'] );",
         "define( 'WP_SITEURL', 'http://' . \$_SERVER['HTTP_HOST'] );",
         "define( 'WP_HOME', 'http://' . \$_SERVER['HTTP_HOST'] );",
