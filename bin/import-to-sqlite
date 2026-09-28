@@ -17,6 +17,8 @@ defined( "BASE_DIR" ) || define(
 
 require BASE_DIR . "vendor/autoload.php";
 
+use Websyspro\WpEngine\Shareds\WordpressImport;
+
 $wordpressImport = new WordpressImport();
 $wordpressImport->importStructureFromTable();
 $wordpressImport->importRegisterFromTable();
