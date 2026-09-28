@@ -18,6 +18,7 @@ class WordpressImport
   private int $offSet;
   private int $limit;
   private int $page;
+  private int $totalRows;
   private array $rows;
   private array $fields;
   private array $variables = [];
@@ -87,10 +88,13 @@ class WordpressImport
             ->green( $row->tableName )->eof();
         }
 
+        $this->totalRows = 0;
         $this->limit = 512;
         $this->page = 0;
 
         do {
+          $this->variables = [];
+          $this->values = [];
           $this->rows = [];
 
           $this->selectOffSet();
@@ -121,22 +125,24 @@ class WordpressImport
               );
 
               $statement->execute( $this->values );
-
-              Terminal::init()
-                ->spc()->brightCyan( "populated table" )->eof();
-
             } catch( PDOException $exception ){
               Terminal::init()
                 ->text( "Error:" )->spc()
-                ->cyan( $exception->getMessage() )->eof()
-                ->cyan( $statement->queryString )->eof();
+                ->cyan( $exception->getMessage() )->eof();
                 exit();
             }
           }
 
-
           $this->page++;
+          $this->totalRows += sizeof( $this->rows );
         } while ( $this->selectedRows() );
+
+        Terminal::init()->spc()
+          ->cyan( "populated table" )->spc()
+          ->text( $row->tableName )->spc()
+          ->cyan( "with" )->spc()
+          ->text( $this->totalRows )->spc()
+          ->cyan( "registers" )->eof();
       }
     }
 
