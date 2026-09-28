@@ -50,7 +50,7 @@ class WordpressImport
   public function importStructureFromTable(
   ): void {
     foreach( $this->selectTablesFromSource() as $row ){
-      if( $this->selectHasTableFromTarget( $row->tableName )){
+      if( $this->selectHasTableFromTarget( $row->tableName ) === false ){
         $statement = $this->handleSource->query(
           "Show Create Table {$row->tableName}"
         );
@@ -64,6 +64,10 @@ class WordpressImport
             }
           }
         }
+      } else {
+        Terminal::init()
+          ->text( "Existed table:" )->spc()
+          ->cyan( $row->tableName )->eof();
       }
     }
   }

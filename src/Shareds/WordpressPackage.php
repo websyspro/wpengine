@@ -330,7 +330,7 @@ class WordpressPackage
         "/*",
         " * Paths customizados.",
         " **/",
-        "define( 'WP_CONTENT_DIR', BASE_DIR . getenv( 'CONTENT_DIR' ));",
+        "define( 'WP_CONTENT_DIR', BASE_DIR . '{$this->serverJson->contentDir}');",
         "define( 'WP_CONTENT_URL', 'http://localhost:{$this->serverJson->httpServerPort}' );",
         "define( 'WP_SITEURL', 'http://localhost:{$this->serverJson->httpServerPort}' );",
         "define( 'WP_HOME', 'http://localhost:{$this->serverJson->httpServerPort}' );",
