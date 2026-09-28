@@ -15,6 +15,18 @@ defined( "BASE_DIR" ) || define(
   ) . DIRECTORY_SEPARATOR
 );
 
+/*
+ * Define ENVs
+ * */
+putenv( "DATABASE_TYPE=sqlite" );
+putenv( "DB_ENGINE=sqlite" );
+putenv( "DB_DRIVER=sqlite" );
+putenv( "DB_NAME=.ht.sqlite" );
+putenv( "CONTENT_DIR=src" );
+
+/*
+ * Define REQUIRE
+ * */
 require_once BASE_DIR . "vendor/autoload.php";
 require_once BASE_DIR . "vendor/websyspro/wpengine/src/Core/wp-load.php";
 
@@ -23,4 +35,4 @@ global $wpdb;
 
 $wordpressImport = new WordpressImport( "localhost", "3306", "edocente_admin", "root", "qazwsx", BASE_DIR, $wpdb );
 $wordpressImport->importStructureFromTable();
-$wordpressImport->importRegisterFromTable();
+// $wordpressImport->importRegisterFromTable();
