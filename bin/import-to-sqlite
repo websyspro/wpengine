@@ -35,4 +35,4 @@ global $wpdb;
 
 $wordpressImport = new WordpressImport( "localhost", "3306", "edocente_admin", "root", "qazwsx", BASE_DIR, $wpdb );
 $wordpressImport->importStructureFromTable();
-// $wordpressImport->importRegisterFromTable();
+$wordpressImport->importRegisterFromTable();
