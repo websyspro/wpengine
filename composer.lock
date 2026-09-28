@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8744aaaf38d73b064eb88ad91941b97",
+    "content-hash": "e1b0fb576e57f6df74673c547abf4ed0",
     "packages": [
         {
             "name": "websyspro/devtools",

@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Browser Reload CLI
+ * 
+ * Inicia o sistema de hot reload para navegadores.
+ * Monitora mudanças em arquivos e notifica browsers conectados
+ * para recarregar automaticamente.
+ */
+
+defined( "BASE_DIR" ) || define(
+  "BASE_DIR", realpath(
+    dirname( __DIR__, 4 ) 
+  ) . DIRECTORY_SEPARATOR
+);
+
+require BASE_DIR . "vendor/autoload.php";
+
+$wordpressImport = new WordpressImport();
+$wordpressImport->importStructureFromTable();
+$wordpressImport->importRegisterFromTable();
