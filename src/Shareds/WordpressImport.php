@@ -51,6 +51,10 @@ class WordpressImport
 
   public function importStructureFromTable(
   ): void {
+    Terminal::init()
+      ->green( "MySQL / MariaDB to Sqlite" )->eof()
+      ->green( "Importing table structure" )->eof()->eof();
+
     foreach( $this->selectTablesFromSource() as $row ){
       if( $this->selectHasTableFromTarget( $row->tableName ) === false ){
         $statement = $this->handleSource->query(
@@ -61,21 +65,26 @@ class WordpressImport
           if( $this->wpdb instanceof WP_SQLite_DB ){
             if( $this->wpdb->query( $statement->fetchColumn( 1 ))){
               Terminal::init()
-                ->text( "Creating table:" )->spc()
-                ->green( $row->tableName )->eof();
+                ->spc()->text( "-" )->spc()
+                ->green( $row->tableName )->spc()
+                ->text( "successfully created." )->eof();
             }
           }
         }
       } else {
         Terminal::init()
-          ->text( "Existed table:" )->spc()
-          ->cyan( $row->tableName )->eof();
+          ->spc()->text( "-" )->spc()
+          ->cyan( $row->tableName )->spc()
+          ->text( "already exists." )->eof()->eof();
       }
     }
   }
 
   public function importRegisterFromTable(
   ): void {
+    Terminal::init()
+      ->green( "Importing Records" )->eof()->eof();
+
     foreach( $this->selectTablesFromSource() as $row ){
       if( in_array( $row->tableName, [ "wp_wfls_2fa_secrets", "wp_wfls_settings" ])){
         continue;
@@ -84,6 +93,7 @@ class WordpressImport
       if( $this->selectHasTableFromTarget( $row->tableName )){
         if( $this->handleTarget->query( "Delete From '{$row->tableName}'" )){
           Terminal::init()
+            ->spc()->text( "-" )->spc()
             ->text( "Clear table:" )->spc()
             ->green( $row->tableName )->eof();
         }
@@ -138,6 +148,7 @@ class WordpressImport
         } while ( $this->selectedRows() );
 
         Terminal::init()->spc()
+          ->spc()->text( "-" )->spc()
           ->cyan( "populated table" )->spc()
           ->text( $row->tableName )->spc()
           ->cyan( "with" )->spc()
@@ -209,7 +220,7 @@ class WordpressImport
          From wp_usermeta
         Where wp_usermeta.meta_key = 'wp_capabilities'
           And wp_usermeta.meta_value in ( 'a:1:{s:13:\"standard_user\";b:1;}' )
-        Limit 0, 512 )
+        Limit 0, 24 )
            As wp_usermeta )
            As wp_usermeta )
         Limit {$this->offSet}, {$this->limit}"
